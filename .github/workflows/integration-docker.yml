@@ -1,0 +1,13 @@
+name: integration with docker
+on: [push]
+  
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+        steps:
+            - name: docker build
+              run: |
+                docker build -f Dockerfile.cicd
+            
+
+
