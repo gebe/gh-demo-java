@@ -26,9 +26,9 @@ jobs:
                 password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: docker build
-              #run: |
-              #  docker build -f Dockerfile.cicd \
-              #    --tag "${{ steps.meta.outputs.tags }}" \
-              #    --label "${{ steps.meta.outputs.labels }}" \
-              #    .
-              #  docker push ghcr.io/${{ github.repository }}:main
+              run: |
+                docker build -f Dockerfile.cicd \
+                  --tag "${{ steps.meta.outputs.tags }}" \
+                  --label "${{ steps.meta.outputs.labels }}" \
+                  .
+                docker push ghcr.io/${{ github.repository }}:main
