@@ -32,11 +32,31 @@ jobs:
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
 
-            - name: Run Trivy scanner
-              uses: aquasecurity/trivy-action@0.28.0
+            - name: Run Trivy Scanner
+              uses: aquasecurity/trivy-action@0.30.0
               with:
                 scan-type: image
                 scan-ref: ${{ steps.build.outputs.imageid }}
+                output: trivy-report.json
+                format: json
+                exit-code: 0
+
+            - name: Upload Vulnerability Scan Results
+              uses: actions/upload-artifact@v4
+              with:
+                name: trivy-report
+                path: trivy-report.json
+        
+            - name: Fail build on High/Criticial Vulnerabilities
+              uses: aquasecurity/trivy-action@0.30.0
+              with:
+                scan-type: image
+                scan-ref: ${{ steps.build.outputs.imageid }}
+                format: table
+                severity: HIGH,CRITICAL
+                ignore-unfixed: true
+                exit-code: 1
+                skip-setup-trivy: true
                   
             - name: Docker Build
               id: push
@@ -44,4 +64,4 @@ jobs:
               with:
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+                
