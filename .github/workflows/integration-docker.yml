@@ -38,7 +38,7 @@ jobs:
               uses: aquasecurity/trivy-action@0.28.0
               with:
                 scan-type: image
-                scan-ref: ${{ steps.meta.outputs.imageid }}
+                scan-ref: ${{ steps.build.outputs.imageid }}
                   
             - name: Docker Build
               id: push
