@@ -39,7 +39,7 @@ jobs:
                 scan-ref: ${{ steps.build.outputs.imageid }}
                 output: trivy-results.sarif
                 format: sarif
-                severity: HIGH,CRITICAL
+                severity: "CRITICAL,HIGH"
                 exit-code: 1
 
             - name: Upload Trivy scan results to GitHub Security tab
