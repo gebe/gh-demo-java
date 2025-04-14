@@ -28,4 +28,4 @@ jobs:
                   --tag "${{ steps.meta.outputs.tags }}" \
                   --label "${{ steps.meta.outputs.labels }}" \
                   .
-                docker push --all-tags ghcr.io/${{ github.repository }}
+                docker push ghcr.io/${{ github.repository }}:main
