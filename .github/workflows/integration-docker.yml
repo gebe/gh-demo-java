@@ -11,7 +11,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Docker meta
+            - name: Docker Metadata
               id: meta
               uses: docker/metadata-action@v5
               with:
@@ -25,10 +25,25 @@ jobs:
                 username: ${{ github.repository_owner }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: docker build
-              run: |
-                docker build -f Dockerfile.cicd \
-                  --tag "${{ steps.meta.outputs.tags }}" \
-                  --label "${{ steps.meta.outputs.labels }}" \
-                  .
-                docker push ghcr.io/${{ github.repository }}:main
+            - name: Docker Build
+              id: build
+              uses: docker/build-push-action@v6
+              with:
+                load: true
+                push: false
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+
+            - name: Run Trivy scanner
+              uses: aquasecurity/trivy-action@0.28.0
+              with:
+                scan-type: image
+                scan-ref: ${{ steps.meta.outputs.imageid }}
+                  
+            - name: Docker Build
+              id: push
+              uses: docker/build-push-action@v6
+              with:
+                push: true
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
