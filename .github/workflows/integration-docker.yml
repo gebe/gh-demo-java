@@ -8,9 +8,6 @@ jobs:
     docker:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-
             - name: Docker Metadata
               id: meta
               uses: docker/metadata-action@v5
@@ -31,6 +28,7 @@ jobs:
               with:
                 load: true
                 push: false
+                file: Dockerfile.cicd
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
 
