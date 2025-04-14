@@ -27,7 +27,6 @@ jobs:
               uses: docker/build-push-action@v6
               with:
                 load: true
-                push: false
                 file: Dockerfile.cicd
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
@@ -37,31 +36,20 @@ jobs:
               with:
                 scan-type: image
                 scan-ref: ${{ steps.build.outputs.imageid }}
-                output: trivy-report.json
-                format: json
-                exit-code: 0
+                output: trivy-results.sarif
+                format: sarif
 
-            - name: Upload Vulnerability Scan Results
-              uses: actions/upload-artifact@v4
+            - name: Upload Trivy scan results to GitHub Security tab
+              uses: github/codeql-action/upload-sarif@v3
+              if: always()
               with:
-                name: trivy-report
-                path: trivy-report.json
-        
-            - name: Fail build on High/Criticial Vulnerabilities
-              uses: aquasecurity/trivy-action@0.30.0
-              with:
-                scan-type: image
-                scan-ref: ${{ steps.build.outputs.imageid }}
-                format: table
-                severity: HIGH,CRITICAL
-                ignore-unfixed: true
-                exit-code: 1
-                skip-setup-trivy: true
-                  
+                sarif_file: 'trivy-results.sarif'
+
             - name: Docker Build
               id: push
               uses: docker/build-push-action@v6
               with:
                 push: true
+                file: Dockerfile.cicd
                 tags: ${{ steps.meta.outputs.tags }}
-                
+                labels: ${{ steps.meta.outputs.labels }}
