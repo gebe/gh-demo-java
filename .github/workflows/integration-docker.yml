@@ -13,7 +13,7 @@ jobs:
               uses: docker/metadata-action@v5
               with:
                 images: ghcr.io/${{ github.repository }}
-                labels: org.opencontainers.image.source=${{ github.repository_url }}
+                labels: org.opencontainers.image.source=${{ github.repositoryUrl }}
 
             - name: Login to GitHub Container Registry
               uses: docker/login-action@v3
@@ -29,6 +29,3 @@ jobs:
                   --label "${{ steps.meta.outputs.labels }}" \
                   .
                 docker push --all-tags ghcr.io/${{ github.repository }}
-            
-
-
