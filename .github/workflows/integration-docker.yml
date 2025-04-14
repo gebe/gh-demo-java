@@ -3,6 +3,7 @@ on: [push]
 
 permissions: 
   packages: write
+  security-events: write
   
 jobs:
     docker:
