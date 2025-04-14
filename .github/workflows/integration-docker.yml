@@ -48,8 +48,7 @@ jobs:
               with:
                 sarif_file: trivy-results.sarif
 
-            - name: Docker Build
-              id: push
+            - name: Docker Push
               uses: docker/build-push-action@v6
               with:
                 push: true
