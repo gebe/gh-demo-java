@@ -1,4 +1,4 @@
-package de.mtu.k8s.gh_demo_java;
+package de.gebe.gh_demo_java;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

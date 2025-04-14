@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	
-	<groupId>de.mtu.k8s</groupId>
+	<groupId>de.gebe</groupId>
 	<artifactId>gh-demo-java</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gh-demo-java</name>
