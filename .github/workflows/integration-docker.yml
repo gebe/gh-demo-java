@@ -44,6 +44,7 @@ jobs:
         with:
           #load: true
           push: true
+          provenance: mode=max
           file: Dockerfile.cicd
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
