@@ -55,7 +55,7 @@ jobs:
 
       # Code Security must be enbled for SARIF
       # - name: Run Trivy Scanner - SARIF
-      #   uses: aquasecurity/trivy-action@0.30.0
+      #   uses: aquasecurity/trivy-action@0.31.0
       #   with:
       #     scan-ref: ${{ steps.build.outputs.imageid }}
       #     format: sarif
@@ -68,7 +68,7 @@ jobs:
       #     sarif_file: trivy-results.sarif
 
       - name: Run Trivy Scanner
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@0.31.0
         with:
           scan-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
           severity: CRITICAL,HIGH
